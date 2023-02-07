@@ -7,6 +7,7 @@ module.exports = {
       secondary: "var(--secondary)",
       white: "var(--white)",
       border_color: "var(--border_color)",
+      error: "var(--error)"
     },
     container: {
       center: true,
