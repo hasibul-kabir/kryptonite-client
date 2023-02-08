@@ -1,9 +1,10 @@
 import { useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
+import useGetAge from '../../hooks/useGetAge';
 import registrationValidations from '../../validations/registrationValidations';
 
 const RegistrationForm = () => {
-
+    const [ageError, setAgeError] = useState('');
     const initialValues = {
         fName: '',
         lName: '',
@@ -19,10 +20,18 @@ const RegistrationForm = () => {
         initialValues: initialValues,
         validationSchema: registrationValidations,
         onSubmit: async () => {
-            console.log('submitted!');
+            //age validation
+            if (age < 16) {
+                return setAgeError("You are under 16. You are not eligible!");
+            } else if (age > 85) {
+                return setAgeError("You are over 85. You are not eligible!");
+            } else { setAgeError('') }
+            console.log("congratulations!");
         }
     })
 
+
+    const { age } = useGetAge(formik.values.birthYear, formik.values.birthMonth, formik.values.birthDate);
     //*calender
     const currentYear = new Date().getFullYear();
     const years = Array.from(new Array(100), (val, index) => currentYear - index);
@@ -32,7 +41,9 @@ const RegistrationForm = () => {
         return new Date(year, month, 0).getDate();
     };
     let days = Array.from(new Array(getDays(formik.values.birthYear, formik.values.birthMonth)), (val, index) => index + 1);
-    //
+    //** */
+
+
 
     return (
         <form className='flex flex-col gap-y-3' onSubmit={formik.handleSubmit}>
@@ -127,6 +138,7 @@ const RegistrationForm = () => {
                     }
                 </select>
             </div>
+            {ageError ? <p className='text-sm text-error'>{ageError}</p> : null}
 
             <label>Gender:</label>
             <div className='flex gap-x-4'>
