@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
 import useGetAge from '../../hooks/useGetAge';
-import registrationValidations from '../../validations/registrationValidations';
+import { registrationValidations } from '../../validations/formValidations';
 
 const RegistrationForm = () => {
     const [ageError, setAgeError] = useState('');
@@ -10,9 +10,9 @@ const RegistrationForm = () => {
         lName: '',
         email: '',
         password: '',
-        birthDate: null,
-        birthMonth: null,
-        birthYear: null,
+        birthDate: new Date().getDate(),
+        birthMonth: new Date().getMonth() + 1,
+        birthYear: new Date().getFullYear(),
         gender: '',
     }
 
@@ -46,9 +46,9 @@ const RegistrationForm = () => {
 
 
     return (
-        <form className='flex flex-col gap-y-3' onSubmit={formik.handleSubmit}>
+        <form className='flex flex-col gap-y-1' onSubmit={formik.handleSubmit}>
             <input
-                className='w-full md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
+                className='w-full mt-2 md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
                 name='fName'
                 type='text'
                 placeholder='First Name'
@@ -60,7 +60,7 @@ const RegistrationForm = () => {
             ) : null}
 
             <input
-                className='w-full md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
+                className='w-full mt-2 md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
                 name='lName'
                 type='text'
                 placeholder='Last Name'
@@ -72,7 +72,7 @@ const RegistrationForm = () => {
             ) : null}
 
             <input
-                className='w-full md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
+                className='w-full mt-2 md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
                 name='email'
                 type='email'
                 placeholder='Email Address'
@@ -83,7 +83,7 @@ const RegistrationForm = () => {
                 <p className='text-sm text-error'>{formik.errors.email}</p>
             ) : null}
             <input
-                className='w-full md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
+                className='w-full mt-2 md:w-3/4 h-10 px-5 py-3 border border-border_color rounded-md focus:outline-none'
                 name='password'
                 type='password'
                 placeholder='Password'
@@ -95,7 +95,7 @@ const RegistrationForm = () => {
             ) : null}
 
             <label>Date of birth:</label>
-            <div className='flex gap-x-3'>
+            <div className='flex gap-x-3 mt-2'>
                 <select
                     className=' w-1/5 h-8 px-3 py-1 border border-border_color rounded-md focus:outline-none'
                     name="birthDate"
@@ -141,7 +141,7 @@ const RegistrationForm = () => {
             {ageError ? <p className='text-sm text-error'>{ageError}</p> : null}
 
             <label>Gender:</label>
-            <div className='flex gap-x-4'>
+            <div className='flex gap-x-4 mt-2'>
                 <div className='flex items-center gap-x-1'>
                     <input type="radio" id="male" name="gender" value="male" onChange={formik.handleChange} />
                     <label htmlFor="male">Male</label>
